@@ -47,31 +47,31 @@ class YSortCameraGroup(pygame.sprite.Group):
         
         super().__init__()
         self.display_surface = pygame.display.get_surface()
+        
+        # getting the coordinates for the middle of the screen
         self.half_width = self.display_surface.get_size()[0] // 2
         self.half_height = self.display_surface.get_size()[1] // 2
-        self.offset = pygame.math.Vector2(100,200)
-        # self.offset = pygame.math.Vector2(0,0)
-        # placing floor graphics below everything else
-        
+        # at the beginning, set camera to 100,200
+        self.camera = pygame.math.Vector2(100,200)
+        # self.camera = pygame.math.Vector2(0,0)
         self.floor_surface = pygame.image.load('C:/Users/alexa/OneDrive/Desktop/Python-RPG-Game/graphics/tilemap/ground.png').convert()
         self.floor_rect = self.floor_surface.get_rect(topleft = (0,0))
 
         
     def custom_draw(self, player):
         
-        # putting player in middle of screen
-        # self.offset.x = player.rect.centerx - self.half_width
-        # self.offset.y = player.rect.centery - self.half_height
+        # adjust camera to center the player
+        self.camera.x = player.rect.centerx - self.half_width
+        self.camera.y = player.rect.centery - self.half_height
         
-        self.offset.x = player.rect.centerx - self.half_width
-        self.offset.y = player.rect.centery - self.half_height
-        
-        floor_offset_pos = self.floor_rect.topleft - self.offset
+        # placing floor before everything else
+        floor_offset_pos = self.floor_rect.topleft - self.camera
         self.display_surface.blit(self.floor_surface, floor_offset_pos)
         
+        # display all sprites including player
         for sprite in sorted(self.sprites(), key = lambda sprite: sprite.rect.centery): # key is y position of each sprite
-            offset_pos = sprite.rect.topleft - self.offset
-            self.display_surface.blit(sprite.image, offset_pos)
+            camera_pos = sprite.rect.topleft - self.camera
+            self.display_surface.blit(sprite.image, camera_pos)
             
             
             
