@@ -30,7 +30,7 @@ class Level:
                 if column == 'x':
                     Tile((x,y), [self.visible_sprites,self.obstacle_sprites])
                 if column == 'p':
-                    self.player = Player((x,y), [self.visible_sprites])   
+                    self.player = Player((x,y), [self.visible_sprites], self.obstacle_sprites)   
         
         
     def run(self):
