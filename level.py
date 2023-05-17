@@ -9,6 +9,7 @@ from settings import *
 from tile import Tile
 from player import Player
 from debug import *
+from support import *
 
 class Level:
     def __init__(self):
@@ -22,16 +23,24 @@ class Level:
         
         self.create_map()
     def create_map(self):
-        
-        for row_index, row in enumerate(WORLD_MAP):
-            for column_index, column in enumerate(row):
-                x = column_index * TILESIZE
-                y = row_index * TILESIZE
-                if column == 'x':
-                    Tile((x,y), [self.visible_sprites,self.obstacle_sprites])
-                if column == 'p':
-                    self.player = Player((x,y), [self.visible_sprites], self.obstacle_sprites)   
-        
+        layouts = {
+                'boundary': import_csv_layout('C:/Users/alexa/OneDrive/Desktop/Python-RPG-Game/map/map_FloorBlocks.csv')
+                }
+        # iterate through each item in layouts dictionary
+        # find x and y positions 
+        for style, layout in layouts.items():
+            for row_index, row in enumerate(layout):
+                for column_index, column in enumerate(row):
+                    if column != '-1':
+                        x = column_index * TILESIZE
+                        y = row_index * TILESIZE
+                        if style == 'boundary':
+                            Tile((x,y),[self.obstacle_sprites], 'invisible',)
+            #     if column == 'x':
+            #         Tile((x,y), [self.visible_sprites,self.obstacle_sprites])
+            #     if column == 'p':
+            #         self.player = Player((x,y), [self.visible_sprites], self.obstacle_sprites)   
+        self.player = Player((2000,1430), [self.visible_sprites], self.obstacle_sprites)  
         
     def run(self):
         
@@ -44,7 +53,7 @@ class Level:
     
 class YSortCameraGroup(pygame.sprite.Group):
     def __init__(self):
-        
+       
         super().__init__()
         self.display_surface = pygame.display.get_surface()
         
