@@ -17,3 +17,4 @@ class Tile(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft = pos)
         # inflate takes rectangle and changes size. Hitbox should be slightly smaller than player
         self.hitbox = self.rect.inflate(0,-10)
+    

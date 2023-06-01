@@ -24,7 +24,9 @@ class Level:
         self.create_map()
     def create_map(self):
         layouts = {
-                'boundary': import_csv_layout('C:/Users/alexa/OneDrive/Desktop/Python-RPG-Game/map/map_FloorBlocks.csv')
+                'boundary': import_csv_layout('C:/Users/alexa/OneDrive/Desktop/Python-RPG-Game/map/map_FloorBlocks.csv'),
+                'grass': import_csv_layout('C:/Users/alexa/OneDrive/Desktop/Python-RPG-Game/map/map_Grass.csv'),
+                'object': import_csv_layout('C:/Users/alexa/OneDrive/Desktop/Python-RPG-Game/map/map_LargeObjects.csv'),
                 }
         # iterate through each item in layouts dictionary
         # find x and y positions 
@@ -35,7 +37,7 @@ class Level:
                         x = column_index * TILESIZE
                         y = row_index * TILESIZE
                         if style == 'boundary':
-                            Tile((x,y),[self.obstacle_sprites], 'invisible',)
+                            Tile((x,y),[self.visible_sprites,self.obstacle_sprites], 'invisible',)
             #     if column == 'x':
             #         Tile((x,y), [self.visible_sprites,self.obstacle_sprites])
             #     if column == 'p':
