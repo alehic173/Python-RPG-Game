@@ -10,7 +10,7 @@ from tile import Tile
 from player import Player
 from debug import *
 from support import *
-
+from random import choice
 class Level:
     def __init__(self):
         
@@ -28,6 +28,9 @@ class Level:
                 'grass': import_csv_layout('C:/Users/alexa/OneDrive/Desktop/Python-RPG-Game/map/map_Grass.csv'),
                 'object': import_csv_layout('C:/Users/alexa/OneDrive/Desktop/Python-RPG-Game/map/map_LargeObjects.csv'),
                 }
+        graphics = {
+                'grass': import_folder('C:/Users/alexa/OneDrive/Desktop/Python-RPG-Game/graphics/grass')
+            }
         # iterate through each item in layouts dictionary
         # find x and y positions 
         for style, layout in layouts.items():
@@ -37,7 +40,15 @@ class Level:
                         x = column_index * TILESIZE
                         y = row_index * TILESIZE
                         if style == 'boundary':
-                            Tile((x,y),[self.visible_sprites,self.obstacle_sprites], 'invisible',)
+                            Tile((x,y),[self.obstacle_sprites], 'invisible',)
+                        if style == 'grass':
+                            # select from random grass sprite
+                            random_grass_img = choice(graphics['grass'])
+                            Tile((x,y),[self.visible_sprites,self.obstacle_sprites], 'grass', random_grass_img)
+                            pass
+                        if style == 'object':
+                            # create object tile
+                            pass
             #     if column == 'x':
             #         Tile((x,y), [self.visible_sprites,self.obstacle_sprites])
             #     if column == 'p':
@@ -84,7 +95,7 @@ class YSortCameraGroup(pygame.sprite.Group):
             camera_pos = sprite.rect.topleft - self.camera
             self.display_surface.blit(sprite.image, camera_pos)
             
-            
+     
             
             
             
