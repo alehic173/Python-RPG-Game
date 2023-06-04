@@ -13,8 +13,14 @@ class Tile(pygame.sprite.Sprite):
         super().__init__(groups)
         self.sprite_type = sprite_type
         self.image = surface
+        
+        #adding this because objects may be > 64x64
+        if sprite_type == 'object':
+            self.rect = self.image.get_rect(topleft = (pos[0],pos[1]- TILESIZE ))
+        else:
+        
         # self.image = pygame.image.load('C:/Users/alexa/OneDrive/Desktop/Python-RPG-Game/graphics/objects/08.png').convert_alpha()
-        self.rect = self.image.get_rect(topleft = pos)
+            self.rect = self.image.get_rect(topleft = pos)
         # inflate takes rectangle and changes size. Hitbox should be slightly smaller than player
         self.hitbox = self.rect.inflate(0,-10)
     

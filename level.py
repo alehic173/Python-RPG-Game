@@ -29,7 +29,8 @@ class Level:
                 'object': import_csv_layout('C:/Users/alexa/OneDrive/Desktop/Python-RPG-Game/map/map_LargeObjects.csv'),
                 }
         graphics = {
-                'grass': import_folder('C:/Users/alexa/OneDrive/Desktop/Python-RPG-Game/graphics/grass')
+                'grass': import_folder('C:/Users/alexa/OneDrive/Desktop/Python-RPG-Game/graphics/grass'),
+                'objects': import_folder('C:/Users/alexa/OneDrive/Desktop/Python-RPG-Game/graphics/objects')
             }
         # iterate through each item in layouts dictionary
         # find x and y positions 
@@ -45,10 +46,11 @@ class Level:
                             # select from random grass sprite
                             random_grass_img = choice(graphics['grass'])
                             Tile((x,y),[self.visible_sprites,self.obstacle_sprites], 'grass', random_grass_img)
-                            pass
+                            
                         if style == 'object':
-                            # create object tile
-                            pass
+                            surf = graphics['objects'][int(column)]
+                            Tile((x,y),[self.visible_sprites,self.obstacle_sprites], 'object', surf)
+                            
             #     if column == 'x':
             #         Tile((x,y), [self.visible_sprites,self.obstacle_sprites])
             #     if column == 'p':
